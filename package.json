@@ -1,10 +1,11 @@
 {
   "author": "Cleber de M. Goncalves (deMGoncalves)",
   "bugs": {
-    "url": "https://github.com/bake-js/-o-id/issues"
+    "url": "https://github.com/bake-js/-O-id-UI/issues"
   },
-  "description": "-O-id é uma biblioteca leve e fácil de usar para criar Web Components personalizados, com foco em simplicidade e desempenho",
+  "description": "",
   "devDependencies": {
+    "@bake-js/-o-id": "0.0.43",
     "@biomejs/biome": "^1.8.3",
     "@commitlint/cli": "^19.3.0",
     "@commitlint/config-conventional": "^19.2.2",
@@ -14,24 +15,12 @@
   },
   "exports": {
     ".": {
-      "import": "dist/-o-id.js",
-      "require": "dis/-o-id.cjs"
-    },
-    "./dom": {
-      "import": "dist/dom.js",
-      "require": "dis/dom.cjs"
-    },
-    "./echo": {
-      "import": "dist/echo.js",
-      "require": "dis/echo.cjs"
-    },
-    "./event": {
-      "import": "dist/event.js",
-      "require": "dis/event.cjs"
+      "import": "dist/-O-id-UI.js",
+      "require": "dis/-O-id-UI.cjs"
     }
   },
   "files": ["dist", "types.d.ts"],
-  "homepage": "https://github.com/bake-js/-o-id#readme",
+  "homepage": "https://github.com/bake-js/-O-id-UI#readme",
   "license": "MIT",
   "keywords": [
     "Web Components",
@@ -40,12 +29,13 @@
     "shadowRoot",
     "Javascript",
     "HTML",
-    "CSS"
+    "CSS",
+    "UI"
   ],
-  "name": "@bake-js/-o-id",
+  "name": "@bake-js/-O-id-UI",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bake-js/-o-id.git"
+    "url": "git+https://github.com/bake-js/-O-id-UI.git"
   },
   "scripts": {
     "build": "vite build",
@@ -53,5 +43,5 @@
   },
   "type": "module",
   "types": "types.d.ts",
-  "version": "0.0.43"
+  "version": "0.0.1"
 }
