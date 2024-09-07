@@ -5,19 +5,13 @@
   },
   "description": "",
   "devDependencies": {
-    "@bake-js/-o-id": "0.0.43",
+    "@bake-js/-o-id": "link:@bake-js/-o-id",
     "@biomejs/biome": "^1.8.3",
     "@commitlint/cli": "^19.3.0",
     "@commitlint/config-conventional": "^19.2.2",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.7",
     "vite": "^5.3.1"
-  },
-  "exports": {
-    ".": {
-      "import": "dist/-o-id-ui.js",
-      "require": "dis/-o-id-ui.cjs"
-    }
   },
   "files": ["dist", "types.d.ts"],
   "homepage": "https://github.com/bake-js/-o-id-ui#readme",
@@ -32,6 +26,8 @@
     "CSS",
     "UI"
   ],
+  "main": "dist/-o-id-ui.cjs",
+  "module": "dist/-o-id-ui.js",
   "name": "@bake-js/-o-id-ui",
   "repository": {
     "type": "git",
@@ -41,7 +37,9 @@
     "build": "vite build",
     "prepare": "husky"
   },
+  "source": "src/index.js",
+  "styles": "dist/style.css",
   "type": "module",
   "types": "types.d.ts",
-  "version": "0.0.1"
+  "version": "0.0.2"
 }
