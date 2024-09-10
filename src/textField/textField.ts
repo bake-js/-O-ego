@@ -6,7 +6,7 @@ import {
   formAssociated,
   formReset,
 } from "@bake-js/-o-id";
-import { didPaint, paint } from "@bake-js/-o-id/dom";
+import { didPaint, paint, repaint } from "@bake-js/-o-id/dom";
 import Echo from "@bake-js/-o-id/echo";
 import on, { prevent, value } from "@bake-js/-o-id/event";
 import dispatchEvent from "../dispatchEvent";
@@ -48,6 +48,7 @@ class TextField extends Echo(HTMLElement) {
 
   @attributeChanged("id")
   @dispatchEvent("reidentified")
+  @repaint
   set id(value) {
     this.#id = value;
   }
@@ -58,6 +59,7 @@ class TextField extends Echo(HTMLElement) {
 
   @attributeChanged("inputmode")
   @dispatchEvent("remoded")
+  @repaint
   set inputMode(value) {
     this.#inputMode = value;
   }
@@ -68,6 +70,7 @@ class TextField extends Echo(HTMLElement) {
 
   @attributeChanged("label")
   @dispatchEvent("relabelled")
+  @repaint
   set label(value) {
     this.#label = value;
   }
@@ -78,6 +81,7 @@ class TextField extends Echo(HTMLElement) {
 
   @attributeChanged("name")
   @dispatchEvent("renamed")
+  @repaint
   set name(value) {
     this.#name = value;
   }
@@ -88,6 +92,7 @@ class TextField extends Echo(HTMLElement) {
 
   @attributeChanged("readonly", booleanAttribute)
   @dispatchEvent("readonlyed")
+  @repaint
   set readonly(value) {
     this.#readonly = value;
   }
@@ -100,6 +105,7 @@ class TextField extends Echo(HTMLElement) {
   @dispatchEvent("requireded")
   @joinCut(setState)
   @joinCut(setValidity)
+  @repaint
   set required(value) {
     this.#required = value;
   }
@@ -110,6 +116,7 @@ class TextField extends Echo(HTMLElement) {
 
   @attributeChanged("type")
   @dispatchEvent("retarget")
+  @repaint
   set type(value) {
     this.#type = value;
   }
@@ -132,7 +139,7 @@ class TextField extends Echo(HTMLElement) {
   @joinCut(setValidity)
   set value(value) {
     this.#value = value;
-    if (this.isConnected) this.shadowRoot.querySelector("input").value = value;
+    if (this.isPainted) this.shadowRoot.querySelector("input").value = value;
   }
 
   get willValidate() {

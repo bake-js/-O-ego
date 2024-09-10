@@ -26,8 +26,7 @@ class RequiredValidator extends Validator(Echo(HTMLElement)) {
   @dispatchEvent("retexted")
   set text(value) {
     this.#text = value;
-    if (this.isConnected)
-      this.shadowRoot.querySelector("span").innerHTML = value;
+    if (this.isPainted) this.shadowRoot.querySelector("span").innerHTML = value;
   }
 
   constructor() {
