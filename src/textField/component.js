@@ -6,17 +6,18 @@ function component(self) {
     <div class="textField__container">
       <label
         class="textField__label"
-        for="${self.id}">
+        ${self.id ? `for="${self.id}"` : ""}
+      >
           ${self.label}
       </label>
       <div class="textField__wrapper">
         <input
           class="textField"
-          id="${self.id}"
-          inputmode="${self.inputMode}"
-          name="${self.name}"
-          type="${self.type}"
-          value="${self.value}"
+          ${self.id ? `id="${self.id}"` : ""}
+          ${self.inputMode ? `inputmode="${self.inputMode}"` : ""}
+          ${self.name ? `name="${self.name}"` : ""}
+          ${self.type ? `type="${self.type}"` : ""}
+          ${self.value ? `value="${self.value}"` : ""}
           ${self.readonly ? "readonly" : ""}
           ${self.required ? "required" : ""}
         />

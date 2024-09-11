@@ -6,13 +6,14 @@ import {
   formAssociated,
   formReset,
 } from "@bake-js/-o-id";
-import { didPaint, paint, repaint } from "@bake-js/-o-id/dom";
+import { didPaint, paint } from "@bake-js/-o-id/dom";
 import Echo from "@bake-js/-o-id/echo";
 import on, { prevent, value } from "@bake-js/-o-id/event";
+import booleanAttribute from "../booleanAttribute";
 import dispatchEvent from "../dispatchEvent";
 import joinCut from "../joinCut";
-import booleanAttribute from "./booleanAttribute";
 import component from "./component";
+import Input from "./input";
 import {
   attached,
   changed,
@@ -22,6 +23,7 @@ import {
   setState,
   setValidity,
 } from "./interfaces";
+import Label from "./label";
 import style from "./style";
 
 @define("o-text-field")
@@ -29,6 +31,7 @@ import style from "./style";
 class TextField extends Echo(HTMLElement) {
   #controller;
   #id;
+  #input;
   #inputMode;
   #internals;
   #label;
@@ -43,36 +46,34 @@ class TextField extends Echo(HTMLElement) {
   }
 
   get id() {
-    return (this.#id ??= "");
+    return this.#input.id;
   }
 
   @attributeChanged("id")
   @dispatchEvent("reidentified")
-  @repaint
   set id(value) {
-    this.#id = value;
+    this.#label.for = value;
+    this.#input.id = value;
   }
 
   get inputMode() {
-    return this.#inputMode ?? this.type;
+    return this.#input.inputMode;
   }
 
   @attributeChanged("inputmode")
   @dispatchEvent("remoded")
-  @repaint
   set inputMode(value) {
-    this.#inputMode = value;
+    this.#input.inputMode = value;
   }
 
   get label() {
-    return (this.#label ??= "");
+    return this.#label.innerText;
   }
 
   @attributeChanged("label")
   @dispatchEvent("relabelled")
-  @repaint
   set label(value) {
-    this.#label = value;
+    this.#label.innerText = value;
   }
 
   get name() {
@@ -81,44 +82,40 @@ class TextField extends Echo(HTMLElement) {
 
   @attributeChanged("name")
   @dispatchEvent("renamed")
-  @repaint
   set name(value) {
-    this.#name = value;
+    this.#input.name = value;
   }
 
   get readonly() {
-    return (this.#readonly ??= false);
+    return this.#input.readonly;
   }
 
   @attributeChanged("readonly", booleanAttribute)
   @dispatchEvent("readonlyed")
-  @repaint
   set readonly(value) {
-    this.#readonly = value;
+    this.#input.readonly = value;
   }
 
   get required() {
-    return (this.#required ??= false);
+    return this.#input.required;
   }
 
   @attributeChanged("required", booleanAttribute)
   @dispatchEvent("requireded")
   @joinCut(setState)
   @joinCut(setValidity)
-  @repaint
   set required(value) {
-    this.#required = value;
+    this.#input.required = value;
   }
 
   get type() {
-    return (this.#type ??= "text");
+    return this.#input.type;
   }
 
   @attributeChanged("type")
   @dispatchEvent("retarget")
-  @repaint
   set type(value) {
-    this.#type = value;
+    this.#input.type = value;
   }
 
   get validationMessage() {
@@ -130,7 +127,7 @@ class TextField extends Echo(HTMLElement) {
   }
 
   get value() {
-    return (this.#value ??= "");
+    return this.#input.value;
   }
 
   @attributeChanged("value")
@@ -138,8 +135,7 @@ class TextField extends Echo(HTMLElement) {
   @joinCut(setState)
   @joinCut(setValidity)
   set value(value) {
-    this.#value = value;
-    if (this.isPainted) this.shadowRoot.querySelector("input").value = value;
+    this.#input.value = value;
   }
 
   get willValidate() {
@@ -155,6 +151,8 @@ class TextField extends Echo(HTMLElement) {
     this.attachShadow({ mode: "open", delegatesFocus: true });
     this.#controller = new AbortController();
     this.#internals = this.attachInternals();
+    this.#input = Input.from(this);
+    this.#label = Label.from(this);
   }
 
   @connected

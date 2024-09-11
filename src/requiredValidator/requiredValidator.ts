@@ -6,8 +6,10 @@ import {
 } from "@bake-js/-o-id";
 import { paint } from "@bake-js/-o-id/dom";
 import Echo from "@bake-js/-o-id/echo";
+import booleanAttribute from "../booleanAttribute";
 import dispatchEvent from "../dispatchEvent";
-import Validator from "../validator";
+import joinCut from "../joinCut";
+import Validator, { validatedCallback } from "../validator";
 import component from "./component";
 import { attached, removed, setState } from "./interfaces";
 import style from "./style";
@@ -15,18 +17,36 @@ import style from "./style";
 @define("o-required-validator")
 @paint(component, style)
 class RequiredValidator extends Validator(Echo(HTMLElement)) {
+  #disabled;
   #internals;
-  #text;
+  #message;
 
-  get text() {
-    return (this.#text ??= "");
+  get disabled() {
+    return (this.#disabled ??= false);
   }
 
-  @attributeChanged("text")
-  @dispatchEvent("retexted")
-  set text(value) {
-    this.#text = value;
-    if (this.isPainted) this.shadowRoot.querySelector("span").innerHTML = value;
+  @attributeChanged("disabled", booleanAttribute)
+  @dispatchEvent("redisabed")
+  set disabled(value) {
+    this.#disabled = value;
+
+    if (this.isConnected) {
+      this.parentElement.setAttribute("required", !value);
+    }
+  }
+
+  get message() {
+    return (this.#message ??= "");
+  }
+
+  @attributeChanged("message")
+  @dispatchEvent("messaged")
+  set message(value) {
+    this.#message = value;
+
+    if (this.isPainted) {
+      this.shadowRoot.querySelector("span").innerHTML = value;
+    }
   }
 
   constructor() {
@@ -37,20 +57,24 @@ class RequiredValidator extends Validator(Echo(HTMLElement)) {
 
   @connected
   [attached]() {
-    this.dispatchEvent(new CustomEvent("attached"));
-    return this;
-  }
+    if (this.isConnected) {
+      this.parentElement.setAttribute("required", !this.disabled);
+    }
 
-  validationCallback() {
-    this.parentElement.validity.valueMissing
-      ? this.#internals.states.add("invalid")
-      : this.#internals.states.delete("invalid");
+    this.dispatchEvent(new CustomEvent("attached"));
     return this;
   }
 
   @disconnected
   [removed]() {
     this.dispatchEvent(new CustomEvent("removed"));
+    return this;
+  }
+
+  [validatedCallback]() {
+    this.parentElement.validity.valueMissing
+      ? this.#internals.states.add("invalid")
+      : this.#internals.states.delete("invalid");
     return this;
   }
 }

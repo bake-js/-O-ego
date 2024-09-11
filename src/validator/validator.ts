@@ -1,5 +1,5 @@
 import { connected, disconnected } from "@bake-js/-o-id";
-import { attached, removed } from "./interfaces";
+import { attached, removed, validatedCallback } from "./interfaces";
 
 const validator = (Klass) => {
   class Validator extends Klass {
@@ -13,7 +13,7 @@ const validator = (Klass) => {
     [attached]() {
       this.parentElement.addEventListener(
         "changed",
-        (event) => this.validationCallback(event),
+        () => this[validatedCallback](),
         {
           signal: this.#controller.signal,
         },
@@ -21,7 +21,15 @@ const validator = (Klass) => {
 
       this.parentElement.addEventListener(
         "invalidated",
-        (event) => this.validationCallback(event),
+        () => this[validatedCallback](),
+        {
+          signal: this.#controller.signal,
+        },
+      );
+
+      this.parentElement.addEventListener(
+        "requireded",
+        () => this[validatedCallback](),
         {
           signal: this.#controller.signal,
         },
@@ -30,7 +38,7 @@ const validator = (Klass) => {
       return this;
     }
 
-    validationCallback() {
+    [validatedCallback]() {
       return this;
     }
 
