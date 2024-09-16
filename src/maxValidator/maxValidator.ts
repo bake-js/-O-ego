@@ -9,17 +9,23 @@ import Echo from "@bake-js/-o-id/echo";
 import booleanAttribute from "../booleanAttribute";
 import dispatchEvent from "../dispatchEvent";
 import joinCut from "../joinCut";
+import component from "../requiredValidator/component";
+import {
+  attached,
+  removed,
+  setState,
+  syncAttribute,
+} from "../requiredValidator/interfaces";
+import style from "../requiredValidator/style";
 import Validator, { validatedCallback } from "../validator";
-import component from "./component";
-import { attached, removed, setState, syncAttribute } from "./interfaces";
-import style from "./style";
 
-@define("o-required-validator")
+@define("o-max-validator")
 @paint(component, style)
-class RequiredValidator extends Validator(Echo(HTMLElement)) {
+class MaxValidator extends Validator(Echo(HTMLElement)) {
   #disabled;
   #internals;
   #message;
+  #value;
 
   get disabled() {
     return (this.#disabled ??= false);
@@ -46,6 +52,17 @@ class RequiredValidator extends Validator(Echo(HTMLElement)) {
     }
   }
 
+  get value() {
+    return this.#value;
+  }
+
+  @attributeChanged("value")
+  @dispatchEvent("changed")
+  @joinCut(syncAttribute)
+  set value(value) {
+    this.#value = value;
+  }
+
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
@@ -61,7 +78,7 @@ class RequiredValidator extends Validator(Echo(HTMLElement)) {
 
   @disconnected
   [removed]() {
-    this.parentElement.removeAttribute("required");
+    this.parentElement.removeAttribute("max");
     this.dispatchEvent(new CustomEvent("removed"));
     return this;
   }
@@ -69,18 +86,18 @@ class RequiredValidator extends Validator(Echo(HTMLElement)) {
   [syncAttribute]() {
     if (this.isConnected) {
       this.disabled
-        ? this.parentElement.removeAttribute("required")
-        : this.parentElement.setAttribute("required", true);
+        ? this.parentElement.removeAttribute("max")
+        : this.parentElement.setAttribute("max", this.value);
     }
     return this;
   }
 
   [validatedCallback]() {
-    this.parentElement.validity.valueMissing
+    this.parentElement.validity.rangeOverflow
       ? this.#internals.states.add("invalid")
       : this.#internals.states.delete("invalid");
     return this;
   }
 }
 
-export default RequiredValidator;
+export default MaxValidator;

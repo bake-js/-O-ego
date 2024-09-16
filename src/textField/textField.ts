@@ -30,16 +30,9 @@ import style from "./style";
 @paint(component, style)
 class TextField extends Echo(HTMLElement) {
   #controller;
-  #id;
   #input;
-  #inputMode;
   #internals;
   #label;
-  #name;
-  #readonly;
-  #required;
-  #type;
-  #value;
 
   get form() {
     return this.#internals.form;
@@ -76,8 +69,48 @@ class TextField extends Echo(HTMLElement) {
     this.#label.innerText = value;
   }
 
+  get max() {
+    return (this.#input.max ??= "");
+  }
+
+  @attributeChanged("max")
+  @dispatchEvent("maximised")
+  set max(value) {
+    this.#input.max = value;
+  }
+
+  get maxLength() {
+    return (this.#input.maxlength ??= "");
+  }
+
+  @attributeChanged("maxlength")
+  @dispatchEvent("maxed")
+  set maxLength(value) {
+    this.#input.maxlength = value;
+  }
+
+  get min() {
+    return (this.#input.min ??= "");
+  }
+
+  @attributeChanged("min")
+  @dispatchEvent("minimised")
+  set min(value) {
+    this.#input.min = value;
+  }
+
+  get minLength() {
+    return (this.#input.minlength ??= "");
+  }
+
+  @attributeChanged("minlength")
+  @dispatchEvent("mined")
+  set minLength(value) {
+    this.#input.minlength = value;
+  }
+
   get name() {
-    return (this.#name ??= "");
+    return (this.#input.name ??= "");
   }
 
   @attributeChanged("name")
@@ -191,8 +224,7 @@ class TextField extends Echo(HTMLElement) {
   @formReset
   @joinCut(setValidity)
   reset() {
-    this.#value = "";
-    this.shadowRoot.querySelector("input").value = "";
+    this.#input.value = "";
     this.#internals.states.delete("invalid");
     this.dispatchEvent(new CustomEvent("reseted"));
     return this;

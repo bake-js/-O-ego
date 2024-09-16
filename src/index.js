@@ -1,5 +1,9 @@
 import "./tokens/index.css";
 import "./dataSource";
 import "./form";
+import "./maxLengthValidator";
+import "./maxValidator";
+import "./minLengthValidator";
+import "./minValidator";
 import "./requiredValidator";
 import "./textField";

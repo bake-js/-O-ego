@@ -15,6 +15,10 @@ function component(self) {
           class="textField"
           ${self.id ? `id="${self.id}"` : ""}
           ${self.inputMode ? `inputmode="${self.inputMode}"` : ""}
+          ${self.max ? `max="${self.max}"` : ""}
+          ${self.maxLength ? `maxlength="${self.maxLength}"` : ""}
+          ${self.min ? `min="${self.min}"` : ""}
+          ${self.minLength ? `minlength="${self.minLength}"` : ""}
           ${self.name ? `name="${self.name}"` : ""}
           ${self.type ? `type="${self.type}"` : ""}
           ${self.value ? `value="${self.value}"` : ""}

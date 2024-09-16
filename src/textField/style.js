@@ -43,7 +43,11 @@ function style() {
       height: 44px;
       line-height: var(--line-height-md);
       padding: var(--spacing-2) var(--spacing-3);
-      width: 320px;
+      width: 100%;
+    }
+
+    .textField[type="number"] {
+      -moz-appearance: textfield;
     }
 
     .textField:active,
@@ -66,11 +70,17 @@ function style() {
       color: var(--color-gray-500);
     }
 
-    .textField:-webkit-autofill,
-    .textField:-webkit-autofill:hover, 
-    .textField:-webkit-autofill:focus, 
-    .textField:-webkit-autofill:active {
+    .textField::-webkit-autofill,
+    .textField::-webkit-autofill:hover, 
+    .textField::-webkit-autofill:focus, 
+    .textField::-webkit-autofill:active {
       transition: background-color 9999999999s ease-in-out 0s
+    }
+
+    .textField::-webkit-outer-spin-button,
+    .textField::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
     }
 
     .textField__alert {

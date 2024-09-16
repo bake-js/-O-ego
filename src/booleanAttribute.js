@@ -1,3 +1,7 @@
-const booleanAttribute = (value) => !/(false|0|no)/i.test(value);
+const booleanAttribute = (value) => {
+  if (value === "") return true;
+  if (value === null) return false;
+  return true;
+};
 
 export default booleanAttribute;

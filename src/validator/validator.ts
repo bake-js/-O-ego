@@ -11,30 +11,13 @@ const validator = (Klass) => {
 
     @connected
     [attached]() {
-      this.parentElement.addEventListener(
-        "changed",
-        () => this[validatedCallback](),
-        {
-          signal: this.#controller.signal,
-        },
-      );
+      const listener = () => this[validatedCallback]();
+      const options = {
+        signal: this.#controller.signal,
+      };
 
-      this.parentElement.addEventListener(
-        "invalidated",
-        () => this[validatedCallback](),
-        {
-          signal: this.#controller.signal,
-        },
-      );
-
-      this.parentElement.addEventListener(
-        "requireded",
-        () => this[validatedCallback](),
-        {
-          signal: this.#controller.signal,
-        },
-      );
-
+      this.parentElement.addEventListener("changed", listener, options);
+      this.parentElement.addEventListener("invalidated", listener, options);
       return this;
     }
 
