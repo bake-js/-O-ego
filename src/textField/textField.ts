@@ -119,6 +119,16 @@ class TextField extends Echo(HTMLElement) {
     this.#input.name = value;
   }
 
+  get pattern() {
+    return this.#input.pattern;
+  }
+
+  @attributeChanged("pattern", booleanAttribute)
+  @dispatchEvent("patterned")
+  set pattern(value) {
+    this.#input.pattern = value;
+  }
+
   get readonly() {
     return this.#input.readonly;
   }
