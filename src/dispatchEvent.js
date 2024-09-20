@@ -6,7 +6,13 @@ const dispatchEvent = (eventName) => (_target, _propertyKeyKey, descriptor) => {
       await Reflect.apply(originalSet, this, [value]);
 
       if (this.isConnected) {
-        this.dispatchEvent(new CustomEvent(eventName, { detail: value }));
+        this.dispatchEvent(
+          new CustomEvent(eventName, {
+            bubbles: true,
+            cancelable: true,
+            detail: value,
+          }),
+        );
       }
     },
   });

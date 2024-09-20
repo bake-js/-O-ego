@@ -1,88 +1,32 @@
-import {
-  attributeChanged,
-  connected,
-  define,
-  disconnected,
-} from "@bake-js/-o-id";
+import { connected, define, disconnected } from "@bake-js/-o-id";
 import { paint } from "@bake-js/-o-id/dom";
 import Echo from "@bake-js/-o-id/echo";
-import booleanAttribute from "../booleanAttribute";
-import dispatchEvent from "../dispatchEvent";
-import joinCut from "../joinCut";
-import component from "../requiredValidator/component";
-import {
-  attached,
+import relay from "@bake-js/-o-id/relay";
+import Validator, {
+  component,
   removed,
   setState,
+  style,
   syncAttribute,
-} from "../requiredValidator/interfaces";
-import style from "../requiredValidator/style";
-import Validator, { validatedCallback } from "../validator";
+} from "../validator";
 
 @define("o-minlength-validator")
 @paint(component, style)
-class MinLengthValidator extends Validator(Echo(HTMLElement)) {
-  #disabled;
+class MinLengthValidator extends Echo(Validator) {
   #internals;
-  #message;
-  #value;
-
-  get disabled() {
-    return (this.#disabled ??= false);
-  }
-
-  @attributeChanged("disabled", booleanAttribute)
-  @dispatchEvent("redisabed")
-  @joinCut(syncAttribute)
-  set disabled(value) {
-    this.#disabled = value;
-  }
-
-  get message() {
-    return (this.#message ??= "");
-  }
-
-  @attributeChanged("message")
-  @dispatchEvent("messaged")
-  set message(value) {
-    this.#message = value;
-
-    if (this.isPainted) {
-      this.shadowRoot.querySelector("span").innerHTML = value;
-    }
-  }
-
-  get value() {
-    return this.#value;
-  }
-
-  @attributeChanged("value")
-  @dispatchEvent("changed")
-  @joinCut(syncAttribute)
-  set value(value) {
-    this.#value = value;
-  }
 
   constructor() {
     super();
-    this.attachShadow({ mode: "open" });
     this.#internals = this.attachInternals();
-  }
-
-  @connected
-  @joinCut(syncAttribute)
-  [attached]() {
-    this.dispatchEvent(new CustomEvent("attached"));
-    return this;
   }
 
   @disconnected
   [removed]() {
     this.parentElement.removeAttribute("minlength");
-    this.dispatchEvent(new CustomEvent("removed"));
     return this;
   }
 
+  @connected
   [syncAttribute]() {
     if (this.isConnected) {
       this.disabled
@@ -92,7 +36,10 @@ class MinLengthValidator extends Validator(Echo(HTMLElement)) {
     return this;
   }
 
-  [validatedCallback]() {
+  @relay.changed()
+  @relay.invalidated()
+  @relay.mined()
+  [setState]() {
     this.parentElement.validity.tooShort
       ? this.#internals.states.add("invalid")
       : this.#internals.states.delete("invalid");

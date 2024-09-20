@@ -29,6 +29,7 @@ function style() {
 
     .textField__wrapper {
       position: relative;
+      width: inherit;
     }
 
     .textField {

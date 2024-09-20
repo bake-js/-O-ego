@@ -1,38 +1,66 @@
-import { connected, disconnected } from "@bake-js/-o-id";
-import { attached, removed, validatedCallback } from "./interfaces";
+import { attributeChanged, connected } from "@bake-js/-o-id";
+import booleanAttribute from "../booleanAttribute";
+import dispatchEvent from "../dispatchEvent";
+import joinCut from "../joinCut";
+import { removed, setState, syncAttribute } from "./interfaces";
 
-const validator = (Klass) => {
-  class Validator extends Klass {
-    #controller = new AbortController();
+class Validator extends HTMLElement {
+  #disabled;
+  #message;
+  #value;
 
-    static get callback() {
-      return callback;
-    }
+  get disabled() {
+    return (this.#disabled ??= false);
+  }
 
-    @connected
-    [attached]() {
-      const listener = () => this[validatedCallback]();
-      const options = {
-        signal: this.#controller.signal,
-      };
+  @attributeChanged("disabled", booleanAttribute)
+  @dispatchEvent("redisabed")
+  @joinCut(syncAttribute)
+  set disabled(value) {
+    this.#disabled = value;
+  }
 
-      this.parentElement.addEventListener("changed", listener, options);
-      this.parentElement.addEventListener("invalidated", listener, options);
-      return this;
-    }
+  get message() {
+    return (this.#message ??= "");
+  }
 
-    [validatedCallback]() {
-      return this;
-    }
+  @attributeChanged("message")
+  @dispatchEvent("messaged")
+  set message(value) {
+    this.#message = value;
 
-    @disconnected
-    [removed]() {
-      this.#controller.abort();
-      return this;
+    if (this.isPainted) {
+      this.shadowRoot.querySelector("span").innerHTML = value;
     }
   }
 
-  return Validator;
-};
+  get value() {
+    return this.#value;
+  }
 
-export default validator;
+  @attributeChanged("value")
+  @dispatchEvent("changed")
+  @joinCut(syncAttribute)
+  set value(value) {
+    this.#value = value;
+  }
+
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+  }
+
+  [removed]() {
+    return this;
+  }
+
+  [syncAttribute]() {
+    return this;
+  }
+
+  [setState]() {
+    return this;
+  }
+}
+
+export default Validator;

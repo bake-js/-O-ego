@@ -15,7 +15,6 @@ import joinCut from "../joinCut";
 import component from "./component";
 import Input from "./input";
 import {
-  attached,
   changed,
   invalidated,
   removed,
@@ -75,6 +74,8 @@ class TextField extends Echo(HTMLElement) {
 
   @attributeChanged("max")
   @dispatchEvent("maximised")
+  @joinCut(setState)
+  @joinCut(setValidity)
   set max(value) {
     this.#input.max = value;
   }
@@ -85,6 +86,8 @@ class TextField extends Echo(HTMLElement) {
 
   @attributeChanged("maxlength")
   @dispatchEvent("maxed")
+  @joinCut(setState)
+  @joinCut(setValidity)
   set maxLength(value) {
     this.#input.maxlength = value;
   }
@@ -95,6 +98,8 @@ class TextField extends Echo(HTMLElement) {
 
   @attributeChanged("min")
   @dispatchEvent("minimised")
+  @joinCut(setState)
+  @joinCut(setValidity)
   set min(value) {
     this.#input.min = value;
   }
@@ -105,6 +110,8 @@ class TextField extends Echo(HTMLElement) {
 
   @attributeChanged("minlength")
   @dispatchEvent("mined")
+  @joinCut(setState)
+  @joinCut(setValidity)
   set minLength(value) {
     this.#input.minlength = value;
   }
@@ -125,6 +132,8 @@ class TextField extends Echo(HTMLElement) {
 
   @attributeChanged("pattern", booleanAttribute)
   @dispatchEvent("patterned")
+  @joinCut(setState)
+  @joinCut(setValidity)
   set pattern(value) {
     this.#input.pattern = value;
   }
@@ -151,12 +160,26 @@ class TextField extends Echo(HTMLElement) {
     this.#input.required = value;
   }
 
+  get step() {
+    return this.#input.step;
+  }
+
+  @attributeChanged("step")
+  @dispatchEvent("stepped")
+  @joinCut(setState)
+  @joinCut(setValidity)
+  set step(value) {
+    this.#input.step = value;
+  }
+
   get type() {
     return this.#input.type;
   }
 
   @attributeChanged("type")
   @dispatchEvent("retarget")
+  @joinCut(setState)
+  @joinCut(setValidity)
   set type(value) {
     this.#input.type = value;
   }
@@ -198,12 +221,6 @@ class TextField extends Echo(HTMLElement) {
     this.#label = Label.from(this);
   }
 
-  @connected
-  [attached]() {
-    this.dispatchEvent(new CustomEvent("attached"));
-    return this;
-  }
-
   @on.input("input", value)
   [changed](val) {
     this.value = val;
@@ -223,7 +240,6 @@ class TextField extends Echo(HTMLElement) {
   @disconnected
   [removed]() {
     this.#controller.abort();
-    this.dispatchEvent(new CustomEvent("removed"));
     return this;
   }
 
