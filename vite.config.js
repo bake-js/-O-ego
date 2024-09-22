@@ -5,7 +5,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: {
-        "-o-id-ui": resolve(__dirname, "src/index.js"),
+        "-o-ego": resolve(__dirname, "src/index.js"),
       },
       formats: ["cjs", "es"],
     },

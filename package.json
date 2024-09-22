@@ -1,7 +1,7 @@
 {
   "author": "Cleber de M. Goncalves (deMGoncalves)",
   "bugs": {
-    "url": "https://github.com/bake-js/-o-id-ui/issues"
+    "url": "https://github.com/bake-js/-o-ego/issues"
   },
   "description": "",
   "devDependencies": {
@@ -14,7 +14,7 @@
     "vite": "^5.3.1"
   },
   "files": ["dist", "types.d.ts"],
-  "homepage": "https://github.com/bake-js/-o-id-ui#readme",
+  "homepage": "https://github.com/bake-js/-o-ego#readme",
   "license": "MIT",
   "keywords": [
     "Web Components",
@@ -26,12 +26,12 @@
     "CSS",
     "UI"
   ],
-  "main": "dist/-o-id-ui.cjs",
-  "module": "dist/-o-id-ui.js",
-  "name": "@bake-js/-o-id-ui",
+  "main": "dist/-o-ego.cjs",
+  "module": "dist/-o-ego.js",
+  "name": "@bake-js/-o-ego",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bake-js/-o-id-ui.git"
+    "url": "git+https://github.com/bake-js/-o-ego.git"
   },
   "scripts": {
     "build": "vite build",
@@ -41,5 +41,5 @@
   "styles": "dist/style.css",
   "type": "module",
   "types": "types.d.ts",
-  "version": "0.0.7"
+  "version": "0.0.1"
 }
