@@ -2,17 +2,14 @@ import { connected, define, disconnected } from "@bake-js/-o-id";
 import { paint } from "@bake-js/-o-id/dom";
 import Echo from "@bake-js/-o-id/echo";
 import relay from "@bake-js/-o-id/relay";
-import Validator, {
-  component,
-  removed,
-  setState,
-  style,
-  syncAttribute,
-} from "../validator";
+import component from "./component";
+import { removed, setState, syncAttribute } from "./interfaces";
+import style from "./style";
+import Validator from "./validator";
 
-@define("o-pattern-validator")
+@define("o-min-validator")
 @paint(component, style)
-class PatternValidator extends Echo(Validator) {
+class MinValidator extends Echo(Validator) {
   #internals;
 
   constructor() {
@@ -22,7 +19,7 @@ class PatternValidator extends Echo(Validator) {
 
   @disconnected
   [removed]() {
-    this.parentElement.removeAttribute("pattern");
+    this.parentElement.removeAttribute("min");
     return this;
   }
 
@@ -30,21 +27,21 @@ class PatternValidator extends Echo(Validator) {
   [syncAttribute]() {
     if (this.isConnected) {
       this.disabled
-        ? this.parentElement.removeAttribute("pattern")
-        : this.parentElement.setAttribute("pattern", this.value);
+        ? this.parentElement.removeAttribute("min")
+        : this.parentElement.setAttribute("min", this.value);
     }
     return this;
   }
 
   @relay.changed()
   @relay.invalidated()
-  @relay.patterned()
+  @relay.minimised()
   [setState]() {
-    this.parentElement.validity.patternMismatch
+    this.parentElement.validity.rangeUnderflow
       ? this.#internals.states.add("invalid")
       : this.#internals.states.delete("invalid");
     return this;
   }
 }
 
-export default PatternValidator;
+export default MinValidator;

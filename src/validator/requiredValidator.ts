@@ -2,13 +2,10 @@ import { connected, define, disconnected } from "@bake-js/-o-id";
 import { paint } from "@bake-js/-o-id/dom";
 import Echo from "@bake-js/-o-id/echo";
 import relay from "@bake-js/-o-id/relay";
-import Validator, {
-  component,
-  removed,
-  setState,
-  style,
-  syncAttribute,
-} from "../validator";
+import component from "./component";
+import { removed, setState, syncAttribute } from "./interfaces";
+import style from "./style";
+import Validator from "./validator";
 
 @define("o-required-validator")
 @paint(component, style)

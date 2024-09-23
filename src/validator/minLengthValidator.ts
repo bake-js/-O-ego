@@ -2,17 +2,14 @@ import { connected, define, disconnected } from "@bake-js/-o-id";
 import { paint } from "@bake-js/-o-id/dom";
 import Echo from "@bake-js/-o-id/echo";
 import relay from "@bake-js/-o-id/relay";
-import Validator, {
-  component,
-  removed,
-  setState,
-  style,
-  syncAttribute,
-} from "../validator";
+import component from "./component";
+import { removed, setState, syncAttribute } from "./interfaces";
+import style from "./style";
+import Validator from "./validator";
 
-@define("o-max-validator")
+@define("o-minlength-validator")
 @paint(component, style)
-class MaxValidator extends Echo(Validator) {
+class MinLengthValidator extends Echo(Validator) {
   #internals;
 
   constructor() {
@@ -22,7 +19,7 @@ class MaxValidator extends Echo(Validator) {
 
   @disconnected
   [removed]() {
-    this.parentElement.removeAttribute("max");
+    this.parentElement.removeAttribute("minlength");
     return this;
   }
 
@@ -30,21 +27,21 @@ class MaxValidator extends Echo(Validator) {
   [syncAttribute]() {
     if (this.isConnected) {
       this.disabled
-        ? this.parentElement.removeAttribute("max")
-        : this.parentElement.setAttribute("max", this.value);
+        ? this.parentElement.removeAttribute("minlength")
+        : this.parentElement.setAttribute("minlength", this.value);
     }
     return this;
   }
 
   @relay.changed()
   @relay.invalidated()
-  @relay.maximised()
+  @relay.mined()
   [setState]() {
-    this.parentElement.validity.rangeOverflow
+    this.parentElement.validity.tooShort
       ? this.#internals.states.add("invalid")
       : this.#internals.states.delete("invalid");
     return this;
   }
 }
 
-export default MaxValidator;
+export default MinLengthValidator;

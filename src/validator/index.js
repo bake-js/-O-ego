@@ -1,4 +1,8 @@
-export { default } from "./validator";
-export { default as component } from "./component";
-export { default as style } from "./style";
-export { removed, setState, syncAttribute } from "./interfaces";
+import "./maxLengthValidator";
+import "./maxValidator";
+import "./minLengthValidator";
+import "./minValidator";
+import "./patternValidator";
+import "./requiredValidator";
+import "./stepValidator";
+import "./typeValidator";
