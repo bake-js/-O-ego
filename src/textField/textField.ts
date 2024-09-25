@@ -25,7 +25,7 @@ import {
 import Label from "./label";
 import style from "./style";
 
-@define("o-text-field")
+@define("ego-text-field")
 @paint(component, style)
 class TextField extends Echo(HTMLElement) {
   #controller;

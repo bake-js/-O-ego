@@ -7,9 +7,9 @@ import { removed, setState, syncAttribute } from "./interfaces";
 import style from "./style";
 import Validator from "./validator";
 
-@define("o-max-validator")
+@define("ego-min-validator")
 @paint(component, style)
-class MaxValidator extends Echo(Validator) {
+class Min extends Echo(Validator) {
   #internals;
 
   constructor() {
@@ -19,7 +19,7 @@ class MaxValidator extends Echo(Validator) {
 
   @disconnected
   [removed]() {
-    this.parentElement.removeAttribute("max");
+    this.parentElement.removeAttribute("min");
     return this;
   }
 
@@ -27,21 +27,21 @@ class MaxValidator extends Echo(Validator) {
   [syncAttribute]() {
     if (this.isConnected) {
       this.disabled
-        ? this.parentElement.removeAttribute("max")
-        : this.parentElement.setAttribute("max", this.value);
+        ? this.parentElement.removeAttribute("min")
+        : this.parentElement.setAttribute("min", this.value);
     }
     return this;
   }
 
   @relay.changed()
   @relay.invalidated()
-  @relay.maximised()
+  @relay.minimised()
   [setState]() {
-    this.parentElement.validity.rangeOverflow
+    this.parentElement.validity.rangeUnderflow
       ? this.#internals.states.add("invalid")
       : this.#internals.states.delete("invalid");
     return this;
   }
 }
 
-export default MaxValidator;
+export default Min;

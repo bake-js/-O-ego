@@ -7,9 +7,9 @@ import { removed, setState, syncAttribute } from "./interfaces";
 import style from "./style";
 import Validator from "./validator";
 
-@define("o-type-validator")
+@define("ego-minlength-validator")
 @paint(component, style)
-class TypeValidator extends Echo(Validator) {
+class MinLength extends Echo(Validator) {
   #internals;
 
   constructor() {
@@ -19,7 +19,7 @@ class TypeValidator extends Echo(Validator) {
 
   @disconnected
   [removed]() {
-    this.parentElement.removeAttribute("type");
+    this.parentElement.removeAttribute("minlength");
     return this;
   }
 
@@ -27,21 +27,21 @@ class TypeValidator extends Echo(Validator) {
   [syncAttribute]() {
     if (this.isConnected) {
       this.disabled
-        ? this.parentElement.removeAttribute("type")
-        : this.parentElement.setAttribute("type", this.value);
+        ? this.parentElement.removeAttribute("minlength")
+        : this.parentElement.setAttribute("minlength", this.value);
     }
     return this;
   }
 
   @relay.changed()
   @relay.invalidated()
-  @relay.retarget()
+  @relay.mined()
   [setState]() {
-    this.parentElement.validity.typeMismatch
+    this.parentElement.validity.tooShort
       ? this.#internals.states.add("invalid")
       : this.#internals.states.delete("invalid");
     return this;
   }
 }
 
-export default TypeValidator;
+export default MinLength;

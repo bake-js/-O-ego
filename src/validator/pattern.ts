@@ -7,9 +7,9 @@ import { removed, setState, syncAttribute } from "./interfaces";
 import style from "./style";
 import Validator from "./validator";
 
-@define("o-maxlength-validator")
+@define("ego-pattern-validator")
 @paint(component, style)
-class MaxLengthValidator extends Echo(Validator) {
+class Pattern extends Echo(Validator) {
   #internals;
 
   constructor() {
@@ -19,7 +19,7 @@ class MaxLengthValidator extends Echo(Validator) {
 
   @disconnected
   [removed]() {
-    this.parentElement.removeAttribute("maxlength");
+    this.parentElement.removeAttribute("pattern");
     return this;
   }
 
@@ -27,21 +27,21 @@ class MaxLengthValidator extends Echo(Validator) {
   [syncAttribute]() {
     if (this.isConnected) {
       this.disabled
-        ? this.parentElement.removeAttribute("maxlength")
-        : this.parentElement.setAttribute("maxlength", this.value);
+        ? this.parentElement.removeAttribute("pattern")
+        : this.parentElement.setAttribute("pattern", this.value);
     }
     return this;
   }
 
   @relay.changed()
   @relay.invalidated()
-  @relay.maxed()
+  @relay.patterned()
   [setState]() {
-    this.parentElement.validity.tooLong
+    this.parentElement.validity.patternMismatch
       ? this.#internals.states.add("invalid")
       : this.#internals.states.delete("invalid");
     return this;
   }
 }
 
-export default MaxLengthValidator;
+export default Pattern;

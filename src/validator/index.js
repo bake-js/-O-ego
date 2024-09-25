@@ -1,8 +1,8 @@
-import "./maxLengthValidator";
-import "./maxValidator";
-import "./minLengthValidator";
-import "./minValidator";
-import "./patternValidator";
-import "./requiredValidator";
-import "./stepValidator";
-import "./typeValidator";
+import "./max";
+import "./maxLength";
+import "./min";
+import "./minLength";
+import "./pattern";
+import "./required";
+import "./step";
+import "./type";

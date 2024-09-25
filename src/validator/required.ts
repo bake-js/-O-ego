@@ -7,9 +7,9 @@ import { removed, setState, syncAttribute } from "./interfaces";
 import style from "./style";
 import Validator from "./validator";
 
-@define("o-pattern-validator")
+@define("ego-required-validator")
 @paint(component, style)
-class PatternValidator extends Echo(Validator) {
+class Required extends Echo(Validator) {
   #internals;
 
   constructor() {
@@ -19,7 +19,7 @@ class PatternValidator extends Echo(Validator) {
 
   @disconnected
   [removed]() {
-    this.parentElement.removeAttribute("pattern");
+    this.parentElement.removeAttribute("required");
     return this;
   }
 
@@ -27,21 +27,21 @@ class PatternValidator extends Echo(Validator) {
   [syncAttribute]() {
     if (this.isConnected) {
       this.disabled
-        ? this.parentElement.removeAttribute("pattern")
-        : this.parentElement.setAttribute("pattern", this.value);
+        ? this.parentElement.removeAttribute("required")
+        : this.parentElement.setAttribute("required", true);
     }
     return this;
   }
 
   @relay.changed()
   @relay.invalidated()
-  @relay.patterned()
+  @relay.requireded()
   [setState]() {
-    this.parentElement.validity.patternMismatch
+    this.parentElement.validity.valueMissing
       ? this.#internals.states.add("invalid")
       : this.#internals.states.delete("invalid");
     return this;
   }
 }
 
-export default PatternValidator;
+export default Required;

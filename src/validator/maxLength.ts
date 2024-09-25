@@ -7,20 +7,19 @@ import { removed, setState, syncAttribute } from "./interfaces";
 import style from "./style";
 import Validator from "./validator";
 
-@define("o-step-validator")
+@define("ego-maxlength-validator")
 @paint(component, style)
-class StepValidator extends Echo(Validator) {
+class MaxLength extends Echo(Validator) {
   #internals;
 
   constructor() {
     super();
-    this.attachShadow({ mode: "open" });
     this.#internals = this.attachInternals();
   }
 
   @disconnected
   [removed]() {
-    this.parentElement.removeAttribute("step");
+    this.parentElement.removeAttribute("maxlength");
     return this;
   }
 
@@ -28,21 +27,21 @@ class StepValidator extends Echo(Validator) {
   [syncAttribute]() {
     if (this.isConnected) {
       this.disabled
-        ? this.parentElement.removeAttribute("step")
-        : this.parentElement.setAttribute("step", this.value);
+        ? this.parentElement.removeAttribute("maxlength")
+        : this.parentElement.setAttribute("maxlength", this.value);
     }
     return this;
   }
 
   @relay.changed()
   @relay.invalidated()
-  @relay.stepped()
+  @relay.maxed()
   [setState]() {
-    this.parentElement.validity.stepMismatch
+    this.parentElement.validity.tooLong
       ? this.#internals.states.add("invalid")
       : this.#internals.states.delete("invalid");
     return this;
   }
 }
 
-export default StepValidator;
+export default MaxLength;
