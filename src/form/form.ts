@@ -3,7 +3,7 @@ import { paint } from "@bake-js/-o-id/dom";
 import Echo from "@bake-js/-o-id/echo";
 import on, { formData, prevent } from "@bake-js/-o-id/event";
 import component from "./component";
-import { reseted, submitted } from "./interfaces";
+import { reseted, submitted, template } from "./interfaces";
 import style from "./style";
 
 @define("ego-form")

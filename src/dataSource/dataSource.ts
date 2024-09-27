@@ -14,7 +14,7 @@ import interpolation from "./interpolation";
 import Url from "./url";
 import willCut from "./willCut";
 
-@define("o-data-source")
+@define("ego-data-source")
 class DataSource extends Echo(HTMLElement) {
   #controller;
   #url = new Url();
@@ -36,9 +36,9 @@ class DataSource extends Echo(HTMLElement) {
       .signal(this.#controller.signal)
       .json();
 
-    error
-      ? this.dispatchEvent(new CustomEvent("undeleted", { detail: error }))
-      : this.dispatchEvent(new CustomEvent("deleted", { detail: data }));
+    data
+      ? this.dispatchEvent(new CustomEvent("deleted", { detail: data }))
+      : this.dispatchEvent(new CustomEvent("undeleted", { detail: error }));
 
     return this;
   }
@@ -50,9 +50,9 @@ class DataSource extends Echo(HTMLElement) {
       .signal(this.#controller.signal)
       .json();
 
-    error
-      ? this.dispatchEvent(new CustomEvent("unretrieved", { detail: error }))
-      : this.dispatchEvent(new CustomEvent("retrived", { detail: data }));
+    data
+      ? this.dispatchEvent(new CustomEvent("retrived", { detail: data }))
+      : this.dispatchEvent(new CustomEvent("unretrived", { detail: error }));
 
     return this;
   }
@@ -65,9 +65,9 @@ class DataSource extends Echo(HTMLElement) {
       .signal(this.#controller.signal)
       .json();
 
-    error
-      ? this.dispatchEvent(new CustomEvent("unposted", { detail: error }))
-      : this.dispatchEvent(new CustomEvent("posted", { detail: data }));
+    data
+      ? this.dispatchEvent(new CustomEvent("posted", { detail: data }))
+      : this.dispatchEvent(new CustomEvent("unposted", { detail: error }));
 
     return this;
   }
@@ -80,9 +80,9 @@ class DataSource extends Echo(HTMLElement) {
       .signal(this.#controller.signal)
       .json();
 
-    error
-      ? this.dispatchEvent(new CustomEvent("unupdated", { detail: error }))
-      : this.dispatchEvent(new CustomEvent("updated", { detail: data }));
+    data
+      ? this.dispatchEvent(new CustomEvent("updated", { detail: data }))
+      : this.dispatchEvent(new CustomEvent("unupdated", { detail: error }));
 
     return this;
   }
