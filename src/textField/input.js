@@ -5,6 +5,10 @@ const input = {
       {
         get(target, key) {
           if (textField.isPainted) {
+            if (key === "value") {
+              return textField.shadowRoot.querySelector("input").value;
+            }
+
             return textField.shadowRoot
               .querySelector("input")
               .getAttribute(key);
