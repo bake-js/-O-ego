@@ -4,7 +4,7 @@ import { template } from "./interfaces";
 function component(self) {
   return html`
     <form class="form">
-      ${self[template]}
+      ${self.content}
     </form>
   `;
 }

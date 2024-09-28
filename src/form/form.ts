@@ -9,7 +9,7 @@ import style from "./style";
 @define("ego-form")
 @paint(component, style)
 class Form extends Echo(HTMLElement) {
-  get [template]() {
+  get content() {
     return this.querySelector("template").innerHTML;
   }
 
