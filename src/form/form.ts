@@ -54,7 +54,7 @@ class Form extends Echo(HTMLElement) {
   [setDisplay]() {
     this.hidden
       ? this.style.setProperty("display", "none")
-      : this.style.removeProperty("display");
+      : this.style.setProperty("display", "block");
     return this;
   }
 
