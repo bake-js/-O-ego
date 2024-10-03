@@ -8,6 +8,7 @@ function style() {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      transition: all 0.2s ease-out;
     }
 
     .textField__container {
@@ -37,7 +38,7 @@ function style() {
       background-color: white;
       border: 1px solid var(--color-gray-300);
       border-radius: var(--border-radius-200);
-      color: var(--color-gray-500);
+      color: var(--color-gray-900);
       font-family: var(--font-family);
       font-size: var(--font-size-md);
       font-weight: 400;
@@ -53,21 +54,24 @@ function style() {
 
     .textField:active,
     .textField:hover {
-      color: var(--color-gray-900);
       outline: 0;
     }
 
     .textField:focus {
       border-color: var(--color-primary-300);
       box-shadow: 0 0 4px 4px var(--color-primary-100);
-      color: var(--color-gray-900);
       outline: 0;
     }
 
+    .textField:disabled,
     .textField:read-only {
       background-color: var(--color-gray-50);
       border-color: var(--color-gray-300);
       box-shadow: none;
+      color: var(--color-gray-500);
+    }
+
+    .textFiedl::placeholder {
       color: var(--color-gray-500);
     }
 

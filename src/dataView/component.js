@@ -1,5 +1,5 @@
 function component(self) {
-  return self.content;
+  return self.textContent;
 }
 
 export default component;

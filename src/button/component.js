@@ -1,8 +1,12 @@
 import { html } from "@bake-js/-o-id/dom";
 
 function component(self) {
-  html`
-    <button>${self.content}</button>
+  return html`
+    <button
+      class="button"
+      ${self.disabled ? "disabled" : ""}>
+      ${self.content}
+    </button>
   `;
 }
 

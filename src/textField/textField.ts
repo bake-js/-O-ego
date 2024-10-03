@@ -18,6 +18,7 @@ import {
   changed,
   invalidated,
   removed,
+  setDisplay,
   setFormValue,
   setState,
   setValidity,
@@ -29,12 +30,34 @@ import style from "./style";
 @paint(component, style)
 class TextField extends Echo(HTMLElement) {
   #controller;
+  #hidden;
   #input;
   #internals;
   #label;
 
+  get disabled() {
+    return this.#input.disabled;
+  }
+
+  @attributeChanged("disabled", booleanAttribute)
+  @dispatchEvent("redisabed")
+  set disabled(value) {
+    this.#input.disabled = value;
+  }
+
   get form() {
     return this.#internals.form;
+  }
+
+  get hidden() {
+    return (this.#hidden ??= false);
+  }
+
+  @attributeChanged("hidden", booleanAttribute)
+  @dispatchEvent("hiddened")
+  @joinCut(setDisplay)
+  set hidden(value) {
+    this.#hidden = value;
   }
 
   get id() {
@@ -136,6 +159,16 @@ class TextField extends Echo(HTMLElement) {
   @joinCut(setValidity)
   set pattern(value) {
     this.#input.pattern = value;
+  }
+
+  get placeholder() {
+    return this.#input.placeholder;
+  }
+
+  @attributeChanged("placeholder")
+  @dispatchEvent("placeholdered")
+  set placeholder(value) {
+    this.#input.placeholder = value;
   }
 
   get readonly() {
@@ -256,21 +289,20 @@ class TextField extends Echo(HTMLElement) {
     return this;
   }
 
-  @formAssociated
-  [setFormValue](form) {
-    form.addEventListener(
-      "formdata",
-      (event) => event.formData.set(this.name, this.value),
-      { signal: this.#controller.signal },
-    );
+  [setDisplay]() {
+    this.hidden
+      ? this.style.setProperty("display", "none")
+      : this.style.removeProperty("display");
     return this;
   }
 
-  @didPaint
-  [setValidity]() {
-    const { validationMessage, validity } =
-      this.shadowRoot.querySelector("input") ?? {};
-    this.#internals.setValidity(validity, validationMessage);
+  @formAssociated
+  [setFormValue](form) {
+    const event = "formdata";
+    const listener = (event) =>
+      this.disabled || event.formData.set(this.name, this.value);
+    const options = { signal: this.#controller.signal };
+    form.addEventListener(event, listener, options);
     return this;
   }
 
@@ -279,6 +311,14 @@ class TextField extends Echo(HTMLElement) {
     this.validity.valid
       ? this.#internals.states.delete("invalid")
       : this.#internals.states.add("invalid");
+    return this;
+  }
+
+  @didPaint
+  [setValidity]() {
+    const { validationMessage, validity } =
+      this.shadowRoot.querySelector("input") ?? {};
+    this.#internals.setValidity(validity, validationMessage);
     return this;
   }
 }

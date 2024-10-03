@@ -10,7 +10,7 @@ class DataView extends Echo(HTMLElement) {
   #content;
   #template = Template.from(this);
 
-  get content() {
+  get textContent() {
     return (this.#content ??= "");
   }
 

@@ -2,7 +2,7 @@ class Template {
   #dataView;
 
   get #content() {
-    return this.#dataView.querySelector("template").innerHTML;
+    return this.#dataView.querySelector("template")?.innerHTML ?? "";
   }
 
   constructor(dataView) {
