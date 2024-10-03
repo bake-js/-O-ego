@@ -2,7 +2,7 @@ import { attributeChanged, connected } from "@bake-js/-o-id";
 import booleanAttribute from "../booleanAttribute";
 import dispatchEvent from "../dispatchEvent";
 import joinCut from "../joinCut";
-import { removed, setState, syncAttribute } from "./interfaces";
+import { removed, resetState, setState, syncAttribute } from "./interfaces";
 
 class Validator extends HTMLElement {
   #disabled;
@@ -51,6 +51,10 @@ class Validator extends HTMLElement {
   }
 
   [removed]() {
+    return this;
+  }
+
+  [resetState]() {
     return this;
   }
 

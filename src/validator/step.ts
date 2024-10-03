@@ -3,7 +3,7 @@ import { paint } from "@bake-js/-o-id/dom";
 import Echo from "@bake-js/-o-id/echo";
 import relay from "@bake-js/-o-id/relay";
 import component from "./component";
-import { removed, setState, syncAttribute } from "./interfaces";
+import { removed, resetState, setState, syncAttribute } from "./interfaces";
 import style from "./style";
 import Validator from "./validator";
 
@@ -21,6 +21,12 @@ class Step extends Echo(Validator) {
   @disconnected
   [removed]() {
     this.parentElement.removeAttribute("step");
+    return this;
+  }
+
+  @relay.reseted()
+  [resetState]() {
+    this.#internals.states.delete("invalid");
     return this;
   }
 
