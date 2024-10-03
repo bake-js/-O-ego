@@ -1,11 +1,12 @@
 import { attributeChanged, define } from "@bake-js/-o-id";
 import { paint, repaint } from "@bake-js/-o-id/dom";
 import Echo from "@bake-js/-o-id/echo";
+import on from "@bake-js/-o-id/event";
 import booleanAttribute from "../booleanAttribute";
 import dispatchEvent from "../dispatchEvent";
 import joinCut from "../joinCut";
 import component from "./component";
-import { setDisplay } from "./interfaces";
+import { dispatchFormAction, setDisplay } from "./interfaces";
 import style from "./style";
 
 @define("ego-button")
@@ -14,6 +15,8 @@ class Button extends Echo(HTMLElement) {
   #content;
   #disabled;
   #hidden;
+  #internals;
+  #type;
 
   get content() {
     return (this.#content ??= "");
@@ -48,9 +51,45 @@ class Button extends Echo(HTMLElement) {
     this.#hidden = value;
   }
 
+  get type() {
+    return (this.#type ??= "");
+  }
+
+  @attributeChanged("type")
+  @dispatchEvent("retarget")
+  set type(value) {
+    this.#type = value;
+  }
+
+  static get formAssociated() {
+    return true;
+  }
+
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
+    this.#internals = this.attachInternals();
+  }
+
+  @on.click("button")
+  @joinCut(dispatchFormAction)
+  click() {
+    const init = { bubbles: true, cancelable: true };
+    const event = new Event("clicked", init);
+    this.dispatchEvent(event);
+    return this;
+  }
+
+  [dispatchFormAction]() {
+    switch (this.type) {
+      case "submit":
+        this.#internals.form?.requestSubmit();
+        break;
+      case "reset":
+        this.#internals.form?.reset();
+        break;
+    }
+    return this;
   }
 
   [setDisplay]() {
