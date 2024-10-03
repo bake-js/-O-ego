@@ -5,7 +5,7 @@
   },
   "description": "",
   "devDependencies": {
-    "@bake-js/-o-id": "0.0.65",
+    "@bake-js/-o-id": "0.0.66",
     "@biomejs/biome": "^1.8.3",
     "@commitlint/cli": "^19.3.0",
     "@commitlint/config-conventional": "^19.2.2",
@@ -41,5 +41,5 @@
   "styles": "dist/style.css",
   "type": "module",
   "types": "types.d.ts",
-  "version": "0.0.12"
+  "version": "0.0.13"
 }
