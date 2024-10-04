@@ -21,7 +21,7 @@ function style() {
     }
 
     .textField__label {
-      color: var(--color-gray-700);
+      color: var(--text-secondary);
       font-family: var(--font-family);
       font-size: var(--font-size-sm);
       font-weight: 500;
@@ -35,13 +35,13 @@ function style() {
 
     .textField {
       appearance: none;
-      background-color: white;
-      border: 1px solid var(--color-gray-300);
+      background-color: var(--bg-primary);
+      border: 1px solid var(--border-primary);
       border-radius: var(--border-radius-200);
-      color: var(--color-gray-900);
+      color: var(--text-primary);
       font-family: var(--font-family);
       font-size: var(--font-size-md);
-      font-weight: 400;
+      font-weight: var(--font-weight-regular);
       height: 44px;
       line-height: var(--line-height-md);
       padding: var(--spacing-2) var(--spacing-3);
@@ -58,21 +58,20 @@ function style() {
     }
 
     .textField:focus {
-      border-color: var(--color-primary-300);
-      box-shadow: 0 0 4px 4px var(--color-primary-100);
+      border-color: var(--border-brand);
       outline: 0;
     }
 
     .textField:disabled,
     .textField:read-only {
-      background-color: var(--color-gray-50);
-      border-color: var(--color-gray-300);
+      background-color: var(--bg-secondary);
+      border-color: var(--border-primary);
       box-shadow: none;
-      color: var(--color-gray-500);
+      color: var(--text-disabled);
     }
 
     .textFiedl::placeholder {
-      color: var(--color-gray-500);
+      color: var(--text-placeholder);
     }
 
     .textField::-webkit-autofill,
@@ -90,6 +89,7 @@ function style() {
 
     .textField__alert {
       align-items: center;
+      color: var(--text-error-primary);
       display: none;
       height: 16px;
       justify-content: center;
@@ -105,12 +105,8 @@ function style() {
       }
 
       .textField {
-        border-color: var(--color-error-300);
+        border-color: var(--border-error);
         padding-right: 40px;
-      }
-
-      .textField:focus {
-        box-shadow: 0 0 4px 4px var(--color-error-100);
       }
     }
   `;

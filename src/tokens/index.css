@@ -1,6 +1,11 @@
+@import url("./bgColor.css");
+@import url("./borderColor.css");
 @import url("./borderRadius.css");
 @import url("./color.css");
+@import url("./focus.css");
 @import url("./fontFamily.css");
 @import url("./fontSize.css");
+@import url("./fontWeight.css");
 @import url("./lineHeight.css");
 @import url("./spacing.css");
+@import url("./textColor.css");

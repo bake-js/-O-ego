@@ -3,11 +3,11 @@ import { css } from "@bake-js/-o-id/dom";
 function style() {
   return css`
     .required {
-      color: var(--color-error-500);
+      color: var(--text-error-primary);
       display: none;
       font-family: var(--font-family);
       font-size: var(--font-size-sm);
-      font-weight: 400;
+      font-weight: var(--font-weight-regular);
       line-height: var(--line-height-sm);
     }
 

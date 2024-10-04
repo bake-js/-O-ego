@@ -12,30 +12,30 @@ function style() {
     }
 
     .button {
-      background-color: var(--color-primary-600);
+      background-color: var(--bg-brand-solid);
       border: none;
       border-radius: var(--border-radius-200);
-      color: #ffffff;
+      color: var(--text-white);
       cursor: pointer;
       font-family: var(--font-family);
       font-size: var(--font-size-sm);
-      font-weight: 600;
+      font-weight: var(--font-weight-semibold);
       line-height: var(--line-height-sm);
       height: 36px;
       padding: 0 var(--spacing-4);
 
       &:disabled {
-        background-color: var(--color-primary-200);
+        background-color: var(--bg-disabled);
       }
 
       &:not(:disabled) {
-        &:focus {
-          box-shadow: 0 0 4px 4px var(--color-primary-100);
+        &:focus-visible {
+          box-shadow: var(--focus-ring);
           outline: 0;
         }
 
         &:hover {
-          background-color: var(--color-primary-700);
+          background-color: var(--bg-brand-solid_hover);
         }
       }
     }
