@@ -4,6 +4,7 @@ function component(self) {
   return html`
     <button
       class="button"
+      size="${self.size}"
       ${self.disabled ? "disabled" : ""}>
       ${self.content}
     </button>

@@ -18,14 +18,41 @@ function style() {
       color: var(--text-white);
       cursor: pointer;
       font-family: var(--font-family);
-      font-size: var(--font-size-sm);
       font-weight: var(--font-weight-semibold);
-      line-height: var(--line-height-sm);
-      height: 36px;
       padding: 0 var(--spacing-4);
+
+      &[size="sm"],
+      &[size="md"] {
+        font-size: var(--font-size-sm);
+        height: 36px;
+        line-height: var(--line-height-sm);
+      }
+
+      &[size="md"] {
+        height: 40px;
+      }
+
+      &[size="lg"],
+      &[size="xl"] {
+        font-size: var(--font-size-md);
+        height: 44px;
+        line-height: var(--line-height-md);
+      }
+
+      &[size="xl"] {
+        height: 48px;
+      }
+
+      &[size="2xl"] {
+        font-size: var(--font-size-lg);
+        height: 60px;
+        line-height: var(--line-height-lg);
+      }
 
       &:disabled {
         background-color: var(--bg-disabled);
+        color: var(--text-disabled);
+        cursor: auto;
       }
 
       &:not(:disabled) {

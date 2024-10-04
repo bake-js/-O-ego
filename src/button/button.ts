@@ -16,6 +16,7 @@ class Button extends Echo(HTMLElement) {
   #disabled;
   #hidden;
   #internals;
+  #size;
   #type;
 
   get content() {
@@ -49,6 +50,17 @@ class Button extends Echo(HTMLElement) {
   @joinCut(setDisplay)
   set hidden(value) {
     this.#hidden = value;
+  }
+
+  get size() {
+    return (this.#size ??= "md");
+  }
+
+  @attributeChanged("size")
+  @dispatchEvent("sized")
+  @repaint
+  set size(value) {
+    this.#size = value;
   }
 
   get type() {
