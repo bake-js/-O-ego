@@ -53,7 +53,7 @@ class Button extends Echo(HTMLElement) {
   }
 
   get size() {
-    return (this.#size ??= "md");
+    return (this.#size ??= "lg");
   }
 
   @attributeChanged("size")
