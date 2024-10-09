@@ -1,7 +1,25 @@
 import { css } from "@bake-js/-o-id/dom";
 
-function style() {
+function style(self) {
   return css`
+    :host {
+      --ego-button-font-size-sm: var(--font-size-sm);
+      --ego-button-font-size-md: var(--font-size-sm);
+      --ego-button-font-size-lg: var(--font-size-md);
+      --ego-button-font-size-xl: var(--font-size-md);
+      --ego-button-font-size-2xl: var(--font-size-lg);
+      --ego-button-line-height-sm: var(--line-height-sm);
+      --ego-button-line-height-md: var(--line-height-sm);
+      --ego-button-line-height-lg: var(--line-height-md);
+      --ego-button-line-height-xl: var(--line-height-md);
+      --ego-button-line-height-2xl: var(--line-height-lg);
+      --ego-button-height-sm: 36px;
+      --ego-button-height-md: 40px;
+      --ego-button-height-lg: 44px;
+      --ego-button-height-xl: 48px;
+      --ego-button-height-2xl: 60px;
+    }
+
     *,
     *::after,
     *::before {
@@ -18,36 +36,11 @@ function style() {
       color: var(--text-white);
       cursor: pointer;
       font-family: var(--font-family);
+      font-size: var(--ego-button-font-size-${self.size});
       font-weight: var(--font-weight-semibold);
+      height: var(--ego-button-height-${self.size});
+      line-height: var(--ego-button-line-height-${self.size});
       padding: 0 var(--spacing-4);
-
-      &[size="sm"],
-      &[size="md"] {
-        font-size: var(--font-size-sm);
-        height: 36px;
-        line-height: var(--line-height-sm);
-      }
-
-      &[size="md"] {
-        height: 40px;
-      }
-
-      &[size="lg"],
-      &[size="xl"] {
-        font-size: var(--font-size-md);
-        height: 44px;
-        line-height: var(--line-height-md);
-      }
-
-      &[size="xl"] {
-        height: 48px;
-      }
-
-      &[size="2xl"] {
-        font-size: var(--font-size-lg);
-        height: 60px;
-        line-height: var(--line-height-lg);
-      }
 
       &:disabled {
         background-color: var(--bg-disabled);

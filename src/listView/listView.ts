@@ -10,7 +10,7 @@ class ListView extends Echo(HTMLElement) {
   #content;
   #template = Template.from(this);
 
-  get textContent() {
+  get content() {
     return (this.#content ??= "");
   }
 

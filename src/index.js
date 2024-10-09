@@ -4,5 +4,6 @@ import "./dataSource";
 import "./dataView";
 import "./form";
 import "./listView";
+import "./text";
 import "./textField";
 import "./validator";
