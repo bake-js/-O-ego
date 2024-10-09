@@ -4,6 +4,9 @@
     "url": "https://github.com/bake-js/-o-ego/issues"
   },
   "description": "",
+  "dependencies": {
+    "imask": "^7.6.1"
+  },
   "devDependencies": {
     "@bake-js/-o-id": "0.0.66",
     "@biomejs/biome": "^1.8.3",
@@ -41,8 +44,5 @@
   "styles": "dist/style.css",
   "type": "module",
   "types": "types.d.ts",
-  "version": "0.0.20",
-  "dependencies": {
-    "imask": "^7.6.1"
-  }
+  "version": "0.0.21"
 }
