@@ -1,2 +1,3 @@
-import "./numberField";
+import "./floatField";
+import "./integerField";
 import "./textField";

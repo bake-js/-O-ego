@@ -12,6 +12,7 @@ import on, { prevent, value } from "@bake-js/-o-id/event";
 import IMask from "imask";
 import booleanAttribute from "../booleanAttribute";
 import dispatchEvent from "../dispatchEvent";
+import ifPainted from "../ifPainted";
 import joinCut from "../joinCut";
 import component from "./component";
 import Input from "./input";
@@ -28,15 +29,16 @@ import {
 import Label from "./label";
 import style from "./style";
 
-@define("ego-number-field")
+@define("ego-integer-field")
 @paint(component, style)
-class NumberField extends Echo(HTMLElement) {
+class IntegerField extends Echo(HTMLElement) {
   #controller;
   #hidden;
   #input;
   #internals;
   #label;
   #mask;
+  #thousandsSeparator;
 
   get disabled() {
     return this.#input.disabled;
@@ -208,6 +210,17 @@ class NumberField extends Echo(HTMLElement) {
     this.#input.step = value;
   }
 
+  get thousandsSeparator() {
+    return (this.#thousandsSeparator ??= ",");
+  }
+
+  @attributeChanged("thousandsseparator")
+  @dispatchEvent("thousandsSeparatored")
+  @joinCut(setMask)
+  set thousandsSeparator(value) {
+    this.#thousandsSeparator = value;
+  }
+
   get type() {
     return this.#input.type;
   }
@@ -310,11 +323,12 @@ class NumberField extends Echo(HTMLElement) {
   }
 
   @didPaint
+  @ifPainted
   [setMask]() {
     const element = this.shadowRoot.querySelector("input");
     const options = {
       mask: Number, // Define a máscara como numérica
-      thousandsSeparator: ".", // Define o ponto como separador de milhares
+      thousandsSeparator: this.thousandsSeparator, // Define o ponto como separador de milhares
       normalizeZeros: true, // Remove zeros à esquerda
     };
 
@@ -340,4 +354,4 @@ class NumberField extends Echo(HTMLElement) {
   }
 }
 
-export default NumberField;
+export default IntegerField;
