@@ -29,7 +29,7 @@ import {
 import Label from "./label";
 import style from "./style";
 
-@define("ego-integer-field")
+@define("ego-float-field")
 @paint(component, style)
 class FloatField extends Echo(HTMLElement) {
   #controller;
