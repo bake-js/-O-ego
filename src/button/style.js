@@ -18,37 +18,22 @@ function style(self) {
       --ego-button-height-lg: 44px;
       --ego-button-height-xl: 48px;
       --ego-button-height-2xl: 60px;
-    }
 
-    *,
-    *::after,
-    *::before {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      transition: all 0.2s ease-out;
-    }
+      button {
+        background-color: var(--bg-brand-solid);
+        border: none;
+        border-radius: var(--border-radius-200);
+        box-sizing: border-box;
+        color: var(--text-white);
+        cursor: pointer;
+        font-family: var(--font-family);
+        font-size: var(--ego-button-font-size-${self.size});
+        font-weight: var(--font-weight-semibold);
+        height: var(--ego-button-height-${self.size});
+        line-height: var(--ego-button-line-height-${self.size});
+        padding: 0 var(--spacing-4);
+        transition: all 0.2s ease-out;
 
-    .button {
-      background-color: var(--bg-brand-solid);
-      border: none;
-      border-radius: var(--border-radius-200);
-      color: var(--text-white);
-      cursor: pointer;
-      font-family: var(--font-family);
-      font-size: var(--ego-button-font-size-${self.size});
-      font-weight: var(--font-weight-semibold);
-      height: var(--ego-button-height-${self.size});
-      line-height: var(--ego-button-line-height-${self.size});
-      padding: 0 var(--spacing-4);
-
-      &:disabled {
-        background-color: var(--bg-disabled);
-        color: var(--text-disabled);
-        cursor: auto;
-      }
-
-      &:not(:disabled) {
         &:focus-visible {
           box-shadow: var(--focus-ring);
           outline: 0;
@@ -57,6 +42,14 @@ function style(self) {
         &:hover {
           background-color: var(--bg-brand-solid_hover);
         }
+      }
+    }
+
+    :host(:state(disabled)) {
+      button {
+        background-color: var(--bg-disabled);
+        color: var(--text-disabled);
+        cursor: auto;
       }
     }
   `;

@@ -6,7 +6,7 @@ import booleanAttribute from "../booleanAttribute";
 import dispatchEvent from "../dispatchEvent";
 import joinCut from "../joinCut";
 import component from "./component";
-import { dispatchFormAction, setDisplay } from "./interfaces";
+import { dispatchFormAction, setDisplay, setState } from "./interfaces";
 import style from "./style";
 
 @define("ego-button")
@@ -18,25 +18,15 @@ class Button extends Echo(HTMLElement) {
   #internals;
   #size;
   #type;
-
-  get content() {
-    return (this.#content ??= "");
-  }
-
-  @attributeChanged("content")
-  @dispatchEvent("contented")
-  @repaint
-  set content(value) {
-    this.#content = value;
-  }
+  #value;
 
   get disabled() {
     return this.#disabled;
   }
 
   @attributeChanged("disabled", booleanAttribute)
-  @dispatchEvent("redisabed")
-  @repaint
+  @dispatchEvent("disabledChanged")
+  @joinCut(setState)
   set readonly(value) {
     this.#disabled = value;
   }
@@ -46,7 +36,7 @@ class Button extends Echo(HTMLElement) {
   }
 
   @attributeChanged("hidden", booleanAttribute)
-  @dispatchEvent("hiddened")
+  @dispatchEvent("hiddenChanged")
   @joinCut(setDisplay)
   set hidden(value) {
     this.#hidden = value;
@@ -57,7 +47,7 @@ class Button extends Echo(HTMLElement) {
   }
 
   @attributeChanged("size")
-  @dispatchEvent("sized")
+  @dispatchEvent("sizeChanged")
   @repaint
   set size(value) {
     this.#size = value;
@@ -68,9 +58,19 @@ class Button extends Echo(HTMLElement) {
   }
 
   @attributeChanged("type")
-  @dispatchEvent("retarget")
+  @dispatchEvent("typeChanged")
   set type(value) {
     this.#type = value;
+  }
+
+  get value() {
+    return this.#value;
+  }
+
+  @attributeChanged("value")
+  @dispatchEvent("valueChanged")
+  set value(value) {
+    this.#value = value;
   }
 
   static get formAssociated() {
@@ -83,11 +83,11 @@ class Button extends Echo(HTMLElement) {
     this.#internals = this.attachInternals();
   }
 
-  @on.click("button")
+  @on.click(":host :not(:disabled) *")
   @joinCut(dispatchFormAction)
   click() {
-    const init = { bubbles: true, cancelable: true };
-    const event = new Event("clicked", init);
+    const init = { bubbles: true, cancelable: true, detail: this.value };
+    const event = new CustomEvent("clicked", init);
     this.dispatchEvent(event);
     return this;
   }
@@ -109,6 +109,12 @@ class Button extends Echo(HTMLElement) {
       ? this.style.setProperty("display", "none")
       : this.style.removeProperty("display");
     return this;
+  }
+
+  [setState]() {
+    this.disabled
+      ? this.#internals.states.add("disabled")
+      : this.#internals.states.delete("disabled");
   }
 }
 
