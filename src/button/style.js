@@ -20,18 +20,21 @@ function style(self) {
       --ego-button-height-2xl: 60px;
 
       button {
+        align-items: center;
         background-color: var(--bg-brand-solid);
         border: none;
-        border-radius: var(--border-radius-200);
+        border-radius: var(--radius-md);
         box-sizing: border-box;
         color: var(--text-white);
         cursor: pointer;
+        display: flex;
         font-family: var(--font-family);
         font-size: var(--ego-button-font-size-${self.size});
         font-weight: var(--font-weight-semibold);
+        gap: var(--spacing-xs);
         height: var(--ego-button-height-${self.size});
         line-height: var(--ego-button-line-height-${self.size});
-        padding: 0 var(--spacing-4);
+        padding: 0 var(--spacing-xl);
         transition: all 0.2s ease-out;
 
         &:focus-visible {

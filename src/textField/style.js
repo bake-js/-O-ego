@@ -15,16 +15,16 @@ function style() {
       align-items: start;
       display: flex;
       flex-direction: column;
-      gap: var(--spacing-2);
+      gap: var(--spacing-sm);
       position: relative;
-      width: 320px;
+      width: var(--width-xxs);
     }
 
     .textField__label {
       color: var(--text-secondary);
       font-family: var(--font-family);
       font-size: var(--font-size-sm);
-      font-weight: 500;
+      font-weight: var(--font-weight-medium);
       line-height: var(--line-height-sm);
     }
 
@@ -37,14 +37,14 @@ function style() {
       appearance: none;
       background-color: var(--bg-primary);
       border: 1px solid var(--border-primary);
-      border-radius: var(--border-radius-200);
+      border-radius: var(--radius-md);
       color: var(--text-primary);
       font-family: var(--font-family);
       font-size: var(--font-size-md);
       font-weight: var(--font-weight-regular);
       height: 44px;
       line-height: var(--line-height-md);
-      padding: var(--spacing-2) var(--spacing-3);
+      padding: var(--spacing-md) var(--spacing-lg);
       width: 100%;
     }
 
